@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Welcome to the KitPanda website!">
+  <title>KitPanda</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <nav>
+      <h1><a href="./">KitPanda</a></h1>
+      <ul>
+        <li><a href="./">Home</a></li>
+        <li><a href="./videos">Videos</a></li>
+        <li><a href="./about">About</a></li>
+        <li><a href="./contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h2>Videos</h2>
+  </section>
+<div id="video-container"></div>
+
+    <script>
+        const API_KEY = 'AIzaSyAiNEpIib4LdCabc9q6KB2__Qmw9XpqI0g'; // Add your API key here
+        const CHANNEL_ID = 'UCLU8qPvcfWk0t4ZEsjSr5lA'; // Add your Channel ID here
+        const MAX_RESULTS = 9; // Number of videos to display
+
+        const videoContainer = document.getElementById('video-container');
+
+        fetch(`https://www.googleapis.com/youtube/v3/search?key=${API_KEY}&channelId=${CHANNEL_ID}&order=date&part=snippet&type=video&maxResults=${MAX_RESULTS}`)
+            .then(response => response.json())
+            .then(data => {
+                const videos = data.items;
+                videos.forEach(video => {
+                    const videoElement = document.createElement('div');
+                    videoElement.classList.add('video');
+                    videoElement.innerHTML = `
+                        <iframe src="https://www.youtube.com/embed/${video.id.videoId}" frameborder="0" allowfullscreen></iframe>
+                        <p>${video.snippet.title}</p>
+                    `;
+                    videoContainer.appendChild(videoElement);
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching YouTube videos:', error);
+            });
+    </script>
+  <footer>
+    <p>© 2024 KitPanda. All rights reserved.</p>
+    <ul>
+      <li><a href="https://youtube.com/@imkitpanda" target="_blank">YouTube</a></li>
+      <li><a href="https://x.com/kitpanda_" target="_blank">X</a></li>
+      <li><a href="https://www.roblox.com/users/7333033689/profile" target="_blank">Roblox</a></li>
+      <li><a href="mailto:kitpanda.yt@outlook.com" target="_blank">Contact Email</a></li>
+    </ul>
+  </footer>
+</body>
+</html>
